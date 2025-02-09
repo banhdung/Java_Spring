@@ -36,4 +36,7 @@ public class UserRequestDTO  implements Serializable {
 
     @EnumPattern(name = "satus" , regexp = "^ACTIVE|INACTIVE|NONE")
     private UserStatus status;
+
+    public UserRequestDTO(String java, String spring, String mail, String number, UserStatus userStatus) {
+    }
 }
