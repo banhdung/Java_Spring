@@ -1,5 +1,6 @@
 package org.example.samplecode.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ import static org.example.samplecode.util.genderValidator.Gender.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDTO  implements Serializable {
+    @NotBlank(message = "first name not blank")
     private String firstName;
     private String lastName;
     private String email;

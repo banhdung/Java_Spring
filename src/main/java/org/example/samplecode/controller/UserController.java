@@ -1,22 +1,34 @@
 package org.example.samplecode.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.example.samplecode.dto.request.UserRequestDTO;
 import org.example.samplecode.response.ResponseData;
-import org.example.samplecode.response.ResponseSuccess;
+import org.example.samplecode.response.ResponseError;
+import org.example.samplecode.service.UserService;
 import org.example.samplecode.util.statusValidator.UserStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Validated
 public class UserController {
+@Autowired
+private UserService userService;
 
     @PostMapping("/")
     public ResponseData<Integer> addUser(@RequestBody @Valid UserRequestDTO userRequestDTO) {
-        return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully", 1);
+       try{
+           userService.addUser(userRequestDTO);
+           return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully", 1);
+       }catch (Exception e){
+           return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+       }
     }
 
     @PutMapping("/{userId}")
@@ -41,7 +53,8 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public ResponseData<?> getUsers() {
+    public ResponseData<?> getUsers(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                    @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize) {
         List<UserRequestDTO> users =  List.of(new UserRequestDTO("Java", "Spring","Spring@gmail.com","0912345678" , UserStatus.ACTIVE),
                 new UserRequestDTO("C", "React","React@gmail.com","0912345678", UserStatus.ACTIVE));
         return new ResponseData<>(HttpStatus.OK.value(), "Users successfully", users);
