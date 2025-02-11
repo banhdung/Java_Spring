@@ -2,6 +2,7 @@ package org.example.samplecode.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.example.samplecode.configuration.Translator;
 import org.example.samplecode.dto.request.UserRequestDTO;
 import org.example.samplecode.response.ResponseData;
 import org.example.samplecode.response.ResponseError;
@@ -25,7 +26,7 @@ private UserService userService;
     public ResponseData<Integer> addUser(@RequestBody @Valid UserRequestDTO userRequestDTO) {
        try{
            userService.addUser(userRequestDTO);
-           return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully", 1);
+           return new ResponseData<>(HttpStatus.CREATED.value(), Translator.toLocale("user.add.success"), 1);
        }catch (Exception e){
            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
        }
@@ -33,7 +34,7 @@ private UserService userService;
 
     @PutMapping("/{userId}")
     public ResponseData<?> updateUser(@PathVariable int userId, @RequestBody UserRequestDTO userRequestDTO) {
-        return new ResponseData<>(HttpStatus.ACCEPTED.value(), "User updated successfully");
+        return new ResponseData<>(HttpStatus.ACCEPTED.value(), Translator.toLocale("user.update.success"), 1);
     }
 
     @PatchMapping("/{userId}")
