@@ -1,0 +1,13 @@
+server :
+  port: 8082
+spring:
+  config:
+    activate:
+      on-profile: product
+open:
+  api:
+    title: API Document
+    version: 1.0
+    description: Description about API service
+    serverUrl: http://localhost:${server.port}
+    serverName: Server Product

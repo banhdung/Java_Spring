@@ -1,0 +1,13 @@
+server :
+  port: 8081
+spring:
+  config:
+    activate:
+      on-profile: test
+open:
+  api:
+    title: API Document
+    version: 1.0
+    description: Description about API service
+    serverUrl: http://localhost:${server.port}
+    serverName: Server Test

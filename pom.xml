@@ -45,6 +45,31 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+            <spring.profile.active>dev</spring.profile.active>
+            </properties>
+        </profile>
+
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profile.active>test</spring.profile.active>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>product</id>
+            <properties>
+                <spring.profile.active>product</spring.profile.active>
+            </properties>
+        </profile>
+
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
